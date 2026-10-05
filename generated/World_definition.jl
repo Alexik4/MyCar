@@ -25,7 +25,7 @@ using DyadInterface: AbstractTransientAnalysisSpec, TransientAnalysisSpec
   var"specialization"::SpecializationLevel.Type = SpecializationLevel.Despecialize()
   var"verbose"::DEVerbosity.Type = DEVerbosity.Standard()
   var"log_file"::String = ""
-  var"T_inf"::Float64 = 300
+  var"T_inf"::Float64 = 380
   var"h"::Float64 = 0.7
   # A simple lumped thermal model
   var"model"::Union{Nothing, System} = MyCar.Hello(; name=:Hello)
