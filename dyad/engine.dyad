@@ -1,6 +1,6 @@
 "short Engine component description"
 component Engine
-  realinputStep = Dyad.RealInput() {^realinput}
+  realinput = Dyad.RealInput() {^realinput}
   spline = Dyad.Spline() {^spline}
   spline1 = Dyad.Spline() {^spline1}
   padedelay = BlockComponents.Nonlinear.PadeDelay(delayTime = theta_e) {^padedelay}
