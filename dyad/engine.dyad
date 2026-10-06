@@ -1,13 +1,15 @@
 "short Engine component description"
 component Engine
-  realinput = Dyad.RealInput() {^realinput}
+  realinputStep = Dyad.RealInput() {^realinput}
   spline = Dyad.Spline() {^spline}
   spline1 = Dyad.Spline() {^spline1}
-  padedelay = BlockComponents.Nonlinear.PadeDelay() {^padedelay}
-  firstorder = BlockComponents.Continuous.FirstOrder() {^firstorder}
+  padedelay = BlockComponents.Nonlinear.PadeDelay(delayTime = theta_e) {^padedelay}
+  firstorder = BlockComponents.Continuous.FirstOrder(T = tau_e) {^firstorder}
   limiter = BlockComponents.Nonlinear.Limiter(y_max = T_Max, y_min = 0) {^limiter}
   torquesource = RotationalComponents.Sources.TorqueSource() {^torquesource}
   parameter T_Max::Real() = 190
+  parameter tau_e::Real(units = "s") = 0.3
+  parameter theta_e::Real(units = "s") = 0.3
 relations
   connect(firstorder.u, padedelay.y) {^id8}
   connect(limiter.u, firstorder.y) {^id9}
