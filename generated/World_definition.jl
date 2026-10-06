@@ -36,6 +36,7 @@ function DyadInterface.run_analysis(spec::WorldSpec)
   no_namespace_model = toggle_namespacing(spec.model, false)
   push!(overrides, no_namespace_model.T_inf => spec.var"T_inf")
   push!(overrides, no_namespace_model.h => spec.var"h")
+  push!(overrides, no_namespace_model.T0 => 420)
   base_spec = TransientAnalysisSpec(;
     name=:TransientAnalysis, overrides, alg=spec.alg, start=spec.start, stop=spec.stop, abstol=spec.abstol, reltol=spec.reltol, saveat=spec.saveat, dtmax=spec.dtmax, tstops=spec.tstops, automatic_discontinuity_detection=spec.automatic_discontinuity_detection, optimize=spec.optimize, progress=spec.progress, respecialize=spec.respecialize, specialization=spec.specialization, verbose=spec.verbose, log_file=spec.log_file, model=spec.model
   )

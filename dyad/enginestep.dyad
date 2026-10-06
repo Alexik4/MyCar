@@ -8,10 +8,9 @@ relations
   connect(engine.spline, load.spline_a) {^id5}
   connect(engine.spline1, mounts.spline) {^id6}
   connect(cmd.y, engine.realinput) {^id7}
-  initial engine.lag.x = 0
+  initial engine.firstorder.x = 0
   initial load.phi = 0
   initial load.w = 0
-end
 metadata {
   "Dyad": {
     "experiments": {},
