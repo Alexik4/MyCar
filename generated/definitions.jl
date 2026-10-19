@@ -199,5 +199,10 @@ component.
 end
 
 
+include("Body_definition.jl")
+include("Driveline_definition.jl")
+include("EngineStepTransient_definition.jl")
+include("EngineStep_definition.jl")
+include("Engine_definition.jl")
 include("Hello_definition.jl")
 include("World_definition.jl")
