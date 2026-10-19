@@ -9,7 +9,7 @@ component Engine
   torquesource = RotationalComponents.Sources.TorqueSource() {^torquesource}
   parameter T_Max::Real() = 190
   parameter tau_e::Real(units = "s") = 0.3
-  parameter theta_e::Real(units = "s") = 0.3
+  structural parameter theta_e::Time = 0.3
 relations
   connect(firstorder.u, padedelay.y) {^id8}
   connect(limiter.u, firstorder.y) {^id9}

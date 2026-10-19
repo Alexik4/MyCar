@@ -5,7 +5,7 @@
 
 
 @doc Markdown.doc"""
-   Engine(; name, T_Max, tau_e, theta_e)
+   Engine(; name, theta_e, T_Max, tau_e)
 
 short Engine component description
 
@@ -13,9 +13,9 @@ short Engine component description
 
 | Name         | Description                         | Units  |   Default value |
 | ------------ | ----------------------------------- | ------ | --------------- |
+| `theta_e`         |                          | s  |   0.3 |
 | `T_Max`         |                          | --  |   190 |
 | `tau_e`         |                          | s  |   0.3 |
-| `theta_e`         |                          | s  |   0.3 |
 
 ## Connectors
 
@@ -23,7 +23,7 @@ short Engine component description
  * `spline` - This connector represents a rotational spline with angle and torque as the potential and flow variables, respectively. ([`Spline`](@ref))
  * `spline1` - This connector represents a rotational spline with angle and torque as the potential and flow variables, respectively. ([`Spline`](@ref))
 """
-@component function Engine(; name = nothing, T_Max=Float64(190), tau_e=0.3, theta_e=0.3, kwargs...)
+@component function Engine(; name = nothing, theta_e=0.3, T_Max=Float64(190), tau_e=0.3, kwargs...)
   isnothing(name) && throw(ArgumentError("""
     The `name` keyword must be provided. Please consider using the `@named` macro,
     like so:
@@ -60,9 +60,6 @@ short Engine component description
   __local__tau_e = tau_e
   append!(__params, @parameters (tau_e::Real))
   __initial_conditions[tau_e] = __local__tau_e
-  __local__theta_e = theta_e
-  append!(__params, @parameters (theta_e::Real))
-  __initial_conditions[theta_e] = __local__theta_e
 
   ### Final Parameters (assignments)
 

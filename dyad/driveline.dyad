@@ -1,0 +1,24 @@
+"""Gearbox and rolling wheel: engine shaft in, tractive force on the body out."""
+component Driveline
+  "From the engine"
+  spline = Spline()
+  "Gearbox housing"
+  support_r = Spline()
+  "To the body"
+  flange = Flange()
+  "Road"
+  support_t = Flange()
+  gear = RotationalComponents.Components.IdealGear(ratio = i)
+  wheel = RotationalComponents.Components.IdealRollingWheel(radius = r)
+  "Gear ratio"
+  parameter i::Real = 4.0
+  "Wheel rolling radius"
+  parameter r::Length = 0.31
+relations
+  connect(spline, gear.spline_a)
+  connect(gear.spline_b, wheel.spline)
+  connect(wheel.flange, flange)
+  connect(gear.support, support_r)
+  connect(wheel.support_r, support_r)
+  connect(wheel.support_t, support_t)
+end
