@@ -27,86 +27,120 @@ component Body
   "Speed at which the drag force is specified"
   parameter v_nominal::Velocity = 30
 relations
-  connect(drag.flange, mass.flange_a) {^id8}
-  connect(rolling.flange, mass.flange_a) {^id9}
-  connect(rolling.support, ground.flange) {^id10}
-  connect(cr_const.y, rolling.cr) {^id11}
-  connect(incl_const.y, rolling.inclination) {^id12}
-  connect(drag.support, ground.flange) {^id13}
-  connect(drag.flange, flange) {^id14}
+  connect(flange, mass.flange_a) {^id1}
+  connect(drag.flange, mass.flange_a) {^id2}
+  connect(rolling.flange, mass.flange_a) {^id3}
+  connect(drag.support, ground.flange) {^id4}
+  connect(rolling.support, ground.flange) {^id5}
+  connect(cr_const.y, rolling.cr) {^id6}
+  connect(incl_const.y, rolling.inclination) {^id7}
 metadata {
+  "Dyad": {
+    "icons": {"default": "dyad://VehicleSystemsComponents/HandsOn/Body.svg"},
+    "labels": [{"label": "$(instance)", "x": 500, "y": 1100, "rot": 0}]
+  },
   "_links": {
     "flange": {
-      "Dyad": {"placement": {"diagram": {"x1": 960, "x2": 1060, "y1": 450, "y2": 550}}}
+      "Dyad": {"placement": {"diagram": {"x1": 950, "x2": 1050, "y1": 450, "y2": 550}}}
     },
     "mass": {
-      "Dyad": {"placement": {"diagram": {"x1": 630, "x2": 730, "y1": 230, "y2": 330}}}
+      "Dyad": {"placement": {"diagram": {"x1": 660, "x2": 760, "y1": 250, "y2": 350}}}
     },
     "drag": {
-      "Dyad": {"placement": {"diagram": {"x1": 480, "x2": 580, "y1": 440, "y2": 540}}}
+      "Dyad": {"placement": {"diagram": {"x1": 550, "x2": 450, "y1": 550, "y2": 650}}}
     },
     "rolling": {
-      "Dyad": {"placement": {"diagram": {"x1": 290, "x2": 390, "y1": 210, "y2": 310}}}
+      "Dyad": {"placement": {"diagram": {"x1": 150, "x2": 250, "y1": 250, "y2": 350}}}
     },
-    "cr_const": {"Dyad": {"placement": {"diagram": {"x1": 30, "x2": 130, "y1": 40, "y2": 140}}}},
+    "cr_const": {"Dyad": {"placement": {"diagram": {"x1": 20, "x2": 120, "y1": 20, "y2": 120}}}},
     "incl_const": {
-      "Dyad": {"placement": {"diagram": {"x1": 20, "x2": 120, "y1": 435, "y2": 535}}}
+      "Dyad": {"placement": {"diagram": {"x1": -20, "x2": 80, "y1": 450, "y2": 550}}}
     },
     "ground": {
-      "Dyad": {"placement": {"diagram": {"x1": 450, "x2": 550, "y1": 1000, "y2": 1100}}}
+      "Dyad": {"placement": {"diagram": {"x1": 450, "x2": 550, "y1": 990, "y2": 1090}}}
     },
-    "id8": {
+    "id1": {
       "Dyad": {
-        "edges": [{"S": 1, "M": [{"x": 275, "y": 490}, {"x": 275, "y": 280}], "E": 2}],
+        "edges": [{"S": 1, "M": [{"x": 410, "y": 500}, {"x": 410, "y": 300}], "E": 2}],
         "path": {}
       }
     },
-    "id9": {
+    "id2": {
       "Dyad": {
-        "edges": [{"S": 1, "M": [{"x": 270, "y": 260}, {"x": 270, "y": 280}], "E": 2}],
+        "edges": [{"S": 1, "M": [{"x": 410, "y": 600}, {"x": 410, "y": 300}], "E": 2}],
         "path": {}
       }
     },
-    "id10": {
+    "id3": {
+      "Dyad": {
+        "edges": [{"S": 1, "M": [], "E": -1}, {"S": -1, "M": [], "E": 2}],
+        "junctions": [{"x": 390, "y": 300}],
+        "path": {}
+      }
+    },
+    "id4": {"Dyad": {"edges": [{"S": 1, "M": [], "E": 2}], "path": {}}},
+    "id5": {
+      "Dyad": {
+        "edges": [{"S": 1, "M": [{"x": 200, "y": 720}], "E": -1}, {"S": -1, "M": [], "E": 2}],
+        "junctions": [{"x": 500, "y": 720}],
+        "path": {}
+      }
+    },
+    "id6": {
+      "Dyad": {
+        "edges": [{"S": 1, "M": [{"x": 140, "y": 70}, {"x": 140, "y": 270}], "E": 2}],
+        "path": {}
+      }
+    },
+    "id7": {
+      "Dyad": {
+        "edges": [{"S": 1, "M": [{"x": 115, "y": 500}, {"x": 115, "y": 325}], "E": 2}],
+        "path": {}
+      }
+    }
+  }
+}
+end
+
+test component TestBody
+  "Constant tractive force from rest"
+  tractive = TranslationalComponents.Sources.ConstantForce(f_constant = 500) {^tractive}
+  body = Body() {^body}
+  fixed = TranslationalComponents.Components.Fixed() {^fixed}
+relations
+  connect(tractive.flange, body.flange) {^id1}
+  connect(tractive.support, fixed.flange) {^id2}
+  initial body.mass.s = 0
+  initial body.mass.v = 0
+metadata {
+  "Dyad": {
+    "tests": {
+      "case1": {
+        "stop": 800,
+        "atol": {"body.mass.a": 0.001, "body.mass.v": 0.001},
+        "expect": {
+          "initial": {"body.mass.a": 0.35714285714285715, "body.mass.v": 0},
+          "final": {"body.mass.a": 0, "body.mass.v": 29.780869893947216},
+          "signals": ["body.mass.v"]
+        }
+      }
+    }
+  },
+  "_links": {
+    "tractive": {
+      "Dyad": {"placement": {"diagram": {"x1": 150, "x2": 250, "y1": 450, "y2": 550}}}
+    },
+    "body": {"Dyad": {"placement": {"diagram": {"x1": 450, "x2": 550, "y1": 450, "y2": 550}}}},
+    "fixed": {"Dyad": {"placement": {"diagram": {"x1": 150, "x2": 250, "y1": 700, "y2": 800}}}},
+    "id1": {
       "Dyad": {
         "edges": [
-          {
-            "S": 1,
-            "M": [
-              {"x": 340, "y": 302.5},
-              {"x": 280, "y": 302.5},
-              {"x": 280, "y": 295},
-              {"x": 260, "y": 295},
-              {"x": 260, "y": 960},
-              {"x": 500, "y": 960}
-            ],
-            "E": 2
-          }
+          {"S": 1, "M": [{"x": 300, "y": 500}, {"x": 300, "y": 620}, {"x": 600, "y": 620}, {"x": 600, "y": 500}], "E": 2}
         ],
         "path": {}
       }
     },
-    "id11": {
-      "Dyad": {
-        "edges": [{"S": 1, "M": [{"x": 140, "y": 90}, {"x": 140, "y": 230}], "E": 2}],
-        "path": {}
-      }
-    },
-    "id12": {
-      "Dyad": {
-        "edges": [{"S": 1, "M": [{"x": 140, "y": 485}, {"x": 140, "y": 285}], "E": 2}],
-        "path": {}
-      }
-    },
-    "id13": {
-      "Dyad": {
-        "edges": [{"S": 1, "M": [{"x": 530, "y": 770}, {"x": 500, "y": 770}], "E": 2}],
-        "path": {}
-      }
-    },
-    "id14": {
-      "Dyad": {"edges": [{"S": 1, "M": [{"x": 1010, "y": 490}], "E": 2}], "path": {}}
-    }
+    "id2": {"Dyad": {"edges": [{"S": 1, "M": [], "E": 2}], "path": {}}}
   }
 }
 end
