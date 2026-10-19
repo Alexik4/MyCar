@@ -1,0 +1,112 @@
+"""
+Car body on a flat road: tractive force in at the flange, resisted by aerodynamic drag and rolling
+resistance.
+"""
+component Body
+  "Tractive force from the driveline"
+  flange = Flange() {^flange}
+  mass = TranslationalComponents.Components.Mass(m = m) {^mass}
+  # A negative nominal force makes the source a load; ForceDirection = false gives the v*|v| form,
+  # so drag opposes motion in both directions.
+  drag = TranslationalComponents.Sources.QuadraticSpeedDependentForce(ForceDirection = false, v_nominal = v_nominal, f_nominal = -0.5 * rho * CdA * v_nominal ^ 2) {^drag}
+  rolling = TranslationalComponents.Components.RollingResistance(fWeight = m * g) {^rolling}
+  cr_const = BlockComponents.Sources.Constant(k = f_r) {^cr_const}
+  "Flat road: tan(alpha) = 0"
+  incl_const = BlockComponents.Sources.Constant(k = 0) {^incl_const}
+  ground = TranslationalComponents.Components.Fixed() {^ground}
+  "Vehicle mass"
+  parameter m::Dyad.Mass = 1400
+  "Aerodynamic drag area, Cd * A"
+  parameter CdA::Area = 0.63
+  "Air density"
+  parameter rho::Density = 1.2
+  "Rolling resistance coefficient"
+  parameter f_r::Real = 0.012
+  "Gravitational acceleration"
+  parameter g::Acceleration = 9.80665
+  "Speed at which the drag force is specified"
+  parameter v_nominal::Velocity = 30
+relations
+  connect(drag.flange, mass.flange_a) {^id8}
+  connect(rolling.flange, mass.flange_a) {^id9}
+  connect(rolling.support, ground.flange) {^id10}
+  connect(cr_const.y, rolling.cr) {^id11}
+  connect(incl_const.y, rolling.inclination) {^id12}
+  connect(drag.support, ground.flange) {^id13}
+  connect(drag.flange, flange) {^id14}
+metadata {
+  "_links": {
+    "flange": {
+      "Dyad": {"placement": {"diagram": {"x1": 960, "x2": 1060, "y1": 450, "y2": 550}}}
+    },
+    "mass": {
+      "Dyad": {"placement": {"diagram": {"x1": 630, "x2": 730, "y1": 230, "y2": 330}}}
+    },
+    "drag": {
+      "Dyad": {"placement": {"diagram": {"x1": 480, "x2": 580, "y1": 440, "y2": 540}}}
+    },
+    "rolling": {
+      "Dyad": {"placement": {"diagram": {"x1": 290, "x2": 390, "y1": 210, "y2": 310}}}
+    },
+    "cr_const": {"Dyad": {"placement": {"diagram": {"x1": 30, "x2": 130, "y1": 40, "y2": 140}}}},
+    "incl_const": {
+      "Dyad": {"placement": {"diagram": {"x1": 20, "x2": 120, "y1": 435, "y2": 535}}}
+    },
+    "ground": {
+      "Dyad": {"placement": {"diagram": {"x1": 450, "x2": 550, "y1": 1000, "y2": 1100}}}
+    },
+    "id8": {
+      "Dyad": {
+        "edges": [{"S": 1, "M": [{"x": 275, "y": 490}, {"x": 275, "y": 280}], "E": 2}],
+        "path": {}
+      }
+    },
+    "id9": {
+      "Dyad": {
+        "edges": [{"S": 1, "M": [{"x": 270, "y": 260}, {"x": 270, "y": 280}], "E": 2}],
+        "path": {}
+      }
+    },
+    "id10": {
+      "Dyad": {
+        "edges": [
+          {
+            "S": 1,
+            "M": [
+              {"x": 340, "y": 302.5},
+              {"x": 280, "y": 302.5},
+              {"x": 280, "y": 295},
+              {"x": 260, "y": 295},
+              {"x": 260, "y": 960},
+              {"x": 500, "y": 960}
+            ],
+            "E": 2
+          }
+        ],
+        "path": {}
+      }
+    },
+    "id11": {
+      "Dyad": {
+        "edges": [{"S": 1, "M": [{"x": 140, "y": 90}, {"x": 140, "y": 230}], "E": 2}],
+        "path": {}
+      }
+    },
+    "id12": {
+      "Dyad": {
+        "edges": [{"S": 1, "M": [{"x": 140, "y": 485}, {"x": 140, "y": 285}], "E": 2}],
+        "path": {}
+      }
+    },
+    "id13": {
+      "Dyad": {
+        "edges": [{"S": 1, "M": [{"x": 530, "y": 770}, {"x": 500, "y": 770}], "E": 2}],
+        "path": {}
+      }
+    },
+    "id14": {
+      "Dyad": {"edges": [{"S": 1, "M": [{"x": 1010, "y": 490}], "E": 2}], "path": {}}
+    }
+  }
+}
+end
