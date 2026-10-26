@@ -18,6 +18,7 @@ end
 include("test_internals.jl")
 
 @testset "`MyCar`" begin
+include("AirPathStep_test.jl")
 include("Body_test.jl")
 include("CarFullThrottle_test.jl")
 include("Car_test.jl")
@@ -32,6 +33,9 @@ include("GradeCarFullThrottle_test.jl")
 include("GradeCar_test.jl")
 include("GradeForce_test.jl")
 include("Hello_test.jl")
+include("Manifold_test.jl")
+include("MapEngineDyno_test.jl")
+include("MapEngine_test.jl")
 include("MeasurementNoise_test.jl")
 include("NoisyCruiseStep_test.jl")
 include("SampledCruiseLoop_test.jl")

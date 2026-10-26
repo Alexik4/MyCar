@@ -203,6 +203,8 @@ component.
 end
 
 
+include("AirPathStepTransient_definition.jl")
+include("AirPathStep_definition.jl")
 include("Body_definition.jl")
 include("CarFullThrottleTransient_definition.jl")
 include("CarFullThrottle_definition.jl")
@@ -222,6 +224,10 @@ include("GradeCarFullThrottle_definition.jl")
 include("GradeCar_definition.jl")
 include("GradeForce_definition.jl")
 include("Hello_definition.jl")
+include("Manifold_definition.jl")
+include("MapEngineDynoTransient_definition.jl")
+include("MapEngineDyno_definition.jl")
+include("MapEngine_definition.jl")
 include("MeasurementNoise_definition.jl")
 include("NoisyCruiseStep_definition.jl")
 include("NoisyCruiseTransient_definition.jl")

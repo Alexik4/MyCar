@@ -9,6 +9,7 @@ if isfile(joinpath((@__DIR__) |> Base.dirname, "dyad", "experiments.jl"))
 end
 
 
+include("AirPathStep_experiment.jl")
 include("Body_experiment.jl")
 include("CarFullThrottle_experiment.jl")
 include("Car_experiment.jl")
@@ -23,6 +24,9 @@ include("GradeCarFullThrottle_experiment.jl")
 include("GradeCar_experiment.jl")
 include("GradeForce_experiment.jl")
 include("Hello_experiment.jl")
+include("Manifold_experiment.jl")
+include("MapEngineDyno_experiment.jl")
+include("MapEngine_experiment.jl")
 include("MeasurementNoise_experiment.jl")
 include("NoisyCruiseStep_experiment.jl")
 include("SampledCruiseLoop_experiment.jl")
