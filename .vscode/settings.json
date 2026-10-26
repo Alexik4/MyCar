@@ -11,5 +11,23 @@
     "julia.juliaup.server": "https://juliahub.com/juliabin",
     "julia.enableDynamicIndexing": false,
     "julia.maxConcurrentIndexingProcesses": 1,
-    "julia.enableWorkspaceEnvironmentResolution": false
+    "julia.enableWorkspaceEnvironmentResolution": false,
+    // agent_resources holds read-only reference material that is not part of this
+    // package. Its .jl files are templates (e.g. surrogate_reintegration_impl.jl has an
+    // include() that only resolves once copied into a package src/), so the Julia
+    // linter reports problems there that are not real. "docs" and "test" are the
+    // extension defaults and must be repeated, since this setting replaces them.
+    "julia.lint.disabledDirs": [
+        "docs",
+        "test",
+        "agent_resources"
+    ],
+    // Keeps the reference tree out of Ctrl+Shift+F and off the file watcher.
+    // Note: language servers do their own indexing and ignore these.
+    "files.watcherExclude": {
+        "**/agent_resources/**": true
+    },
+    "search.exclude": {
+        "**/agent_resources": true
+    }
 }

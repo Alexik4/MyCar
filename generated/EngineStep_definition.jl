@@ -7,7 +7,7 @@
 @doc Markdown.doc"""
    EngineStep(; name)
 
-short EngineStep component description
+A torque command above the ceiling, stepped in at 0.5 s, into a 1 kg·m² flywheel.
 """
 @component function EngineStep(; name = nothing, kwargs...)
   isnothing(name) && throw(ArgumentError("""
@@ -55,16 +55,16 @@ short EngineStep component description
   ### Components
   # Subcomponent cmd of type BlockComponents.Sources.Step
   cmd_overrides = __pop_subcomponent_overrides!(__overrides, "cmd")
-  push!(__systems, @named cmd = BlockComponents.Sources.Step(; height=Float64(200), offset=0.5, cmd_overrides...))
+  push!(__systems, @named cmd = BlockComponents.Sources.Step(; height=Float64(200), offset=Float64(0), start_time=0.5, cmd_overrides...))
+  # Subcomponent engine of type MyCar.Engine
+  engine_overrides = __pop_subcomponent_overrides!(__overrides, "engine")
+  push!(__systems, @named engine = MyCar.Engine(; engine_overrides...))
   # Subcomponent load of type RotationalComponents.Components.Inertia
   load_overrides = __pop_subcomponent_overrides!(__overrides, "load")
   push!(__systems, @named load = RotationalComponents.Components.Inertia(; J=Float64(1), load_overrides...))
   # Subcomponent mounts of type RotationalComponents.Components.Fixed
   mounts_overrides = __pop_subcomponent_overrides!(__overrides, "mounts")
   push!(__systems, @named mounts = RotationalComponents.Components.Fixed(; mounts_overrides...))
-  # Subcomponent engine of type MyCar.Engine
-  engine_overrides = __pop_subcomponent_overrides!(__overrides, "engine")
-  push!(__systems, @named engine = MyCar.Engine(; engine_overrides...))
 
   ### Check there are no unmatched overrides
   isempty(__overrides) || throw(ArgumentError("overrides: [$(join(keys(__overrides), ", "))] don't match names found in model. These names may exist in the model but could have been conditionally excluded."))
@@ -72,7 +72,7 @@ short EngineStep component description
   ### Guesses
 
   ### Initialization Equations
-  push!(__initialization_eqs, engine.firstorder.x ~ 0)
+  push!(__initialization_eqs, engine.lag.x ~ 0)
   push!(__initialization_eqs, load.phi ~ 0)
   push!(__initialization_eqs, load.w ~ 0)
 
@@ -80,9 +80,9 @@ short EngineStep component description
   __assertions = []
 
   ### Equations
+  push!(__eqs, connect(cmd.y, engine.tau_cmd))
   push!(__eqs, connect(engine.spline, load.spline_a))
-  push!(__eqs, connect(engine.spline1, mounts.spline))
-  push!(__eqs, connect(cmd.y, engine.realinput))
+  push!(__eqs, connect(engine.support, mounts.spline))
 
   # Return completely constructed System
   return System(__eqs, t, __vars, __params; systems=__systems, initial_conditions=__initial_conditions, guesses=__guesses, name, initialization_eqs=__initialization_eqs, bindings=__bindings, assertions=__assertions)

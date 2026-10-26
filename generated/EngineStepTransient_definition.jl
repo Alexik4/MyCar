@@ -25,7 +25,7 @@ using DyadInterface: AbstractTransientAnalysisSpec, TransientAnalysisSpec
   var"specialization"::SpecializationLevel.Type = SpecializationLevel.Despecialize()
   var"verbose"::DEVerbosity.Type = DEVerbosity.Standard()
   var"log_file"::String = ""
-  # short EngineStep component description
+  # A torque command above the ceiling, stepped in at 0.5 s, into a 1 kg·m² flywheel.
   var"model"::Union{Nothing, System} = MyCar.EngineStep(; name=:EngineStep)
 end
 
