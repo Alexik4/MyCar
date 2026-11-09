@@ -23,8 +23,8 @@ end
 
 analysis World
   extends TransientAnalysis(stop = 10)
-  model = Hello(T_inf = T_inf, h = h)
-  parameter T_inf::Temperature = 300
+  model = Hello(T_inf = T_inf, h = h, T0 = 420)
+  parameter T_inf::Temperature = 380
   parameter h::CoefficientOfHeatTransfer = 0.7
 relations
 end
