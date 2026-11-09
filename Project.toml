@@ -26,19 +26,22 @@ TranslationalComponents = "42acc370-819b-4877-bdd6-eb3294461f5d"
 VehicleSystemsComponents = "51e0f197-a681-4fed-b1ae-12a69f787746"
 
 [compat]
-BlockComponents = "4.6.0"
-DiscreteComponents = "0.5.1"
+BlockComponents = "=5.0.0"
+DiscreteComponents = "0.6.0"
 DyadData = "2.0.1"
-ElectricalComponents = "2.2.2"
-HydraulicComponents = "2.0.4"
+ElectricalComponents = "=3.0.0"
+HydraulicComponents = "=3.0.0"
 JSON = "0.21, 1"
 Markdown = "1"
 Plots = "1.41.7"
-RotationalComponents = "2.5.5"
+RotationalComponents = "=3.0.0"
 TOML = "1"
-ThermalComponents = "2.0.6"
-TranslationalComponents = "2.5.1"
+ThermalComponents = "=3.0.0"
+TranslationalComponents = "=3.0.0"
 VehicleSystemsComponents = "0.1.0"
+
+[sources]
+VehicleSystemsComponents = {url = "https://github.com/dr14-make/16ESPD", rev = "main"}
 
 [dyad]
 kernel = "3.5.1"
