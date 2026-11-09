@@ -1,9 +1,7 @@
 name = "MyCar"
 uuid = "d344504f-95cf-4c1a-ab83-5e8ef59c2eac"
 version = "0.1.0"
-authors = [
-  " <>"
-]
+authors = [" <>"]
 
 [deps]
 BlockComponents = "1ef5d832-be8e-447f-9f2c-8b5d17d15fd3"
@@ -25,6 +23,9 @@ ThermalComponents = "084a29d9-4f48-4925-95b4-b7d4c79725f4"
 TranslationalComponents = "42acc370-819b-4877-bdd6-eb3294461f5d"
 VehicleSystemsComponents = "51e0f197-a681-4fed-b1ae-12a69f787746"
 
+[sources]
+VehicleSystemsComponents = {rev = "lecture-03-dyad-3.5", url = "https://github.com/dr14-make/16ESPD"}
+
 [compat]
 BlockComponents = "=5.0.0"
 DiscreteComponents = "0.6.0"
@@ -40,9 +41,6 @@ ThermalComponents = "=3.0.0"
 TranslationalComponents = "=3.0.0"
 VehicleSystemsComponents = "0.1.0"
 
-[sources]
-VehicleSystemsComponents = {url = "https://github.com/dr14-make/16ESPD", rev = "main"}
-
 [dyad]
 kernel = "3.5.1"
 
@@ -54,10 +52,4 @@ Plots = "91a5bcdd-55d7-5caf-9e0b-520d859cae80"
 Test = "8dfed614-e22c-5e08-85e1-65c5234f0b40"
 
 [targets]
-test = [
-  "DyadEcosystemDependencies",
-  "CSV",
-  "DataFrames",
-  "Plots",
-  "Test"
-]
+test = ["DyadEcosystemDependencies", "CSV", "DataFrames", "Plots", "Test"]
