@@ -1,7 +1,9 @@
 name = "MyCar"
 uuid = "d344504f-95cf-4c1a-ab83-5e8ef59c2eac"
 version = "0.1.0"
-authors = [" <>"]
+authors = [
+  " <>"
+]
 
 [deps]
 BlockComponents = "1ef5d832-be8e-447f-9f2c-8b5d17d15fd3"
@@ -39,7 +41,7 @@ TranslationalComponents = "2.5.1"
 VehicleSystemsComponents = "0.1.0"
 
 [dyad]
-kernel = "3.4.0"
+kernel = "3.5.1"
 
 [extras]
 CSV = "336ed68f-0bac-5ca0-87d4-7b16caf5d00b"
@@ -49,4 +51,10 @@ Plots = "91a5bcdd-55d7-5caf-9e0b-520d859cae80"
 Test = "8dfed614-e22c-5e08-85e1-65c5234f0b40"
 
 [targets]
-test = ["DyadEcosystemDependencies", "CSV", "DataFrames", "Plots", "Test"]
+test = [
+  "DyadEcosystemDependencies",
+  "CSV",
+  "DataFrames",
+  "Plots",
+  "Test"
+]
