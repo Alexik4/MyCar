@@ -35,6 +35,10 @@ import HydraulicComponents
 let api = isdefined(HydraulicComponents, :__dyad_constructor_api) ? HydraulicComponents.__dyad_constructor_api : 1
   api == 2 || error("HydraulicComponents was generated with Dyad constructor API version $api, but MyCar requires version 2 (the `__overrides` dict override channel). Regenerate HydraulicComponents with the same Dyad compiler that generated MyCar.")
 end
+import MultibodyComponents
+let api = isdefined(MultibodyComponents, :__dyad_constructor_api) ? MultibodyComponents.__dyad_constructor_api : 1
+  api == 2 || error("MultibodyComponents was generated with Dyad constructor API version $api, but MyCar requires version 2 (the `__overrides` dict override channel). Regenerate MultibodyComponents with the same Dyad compiler that generated MyCar.")
+end
 import RotationalComponents
 let api = isdefined(RotationalComponents, :__dyad_constructor_api) ? RotationalComponents.__dyad_constructor_api : 1
   api == 2 || error("RotationalComponents was generated with Dyad constructor API version $api, but MyCar requires version 2 (the `__overrides` dict override channel). Regenerate RotationalComponents with the same Dyad compiler that generated MyCar.")
@@ -239,11 +243,17 @@ include("Body_definition.jl")
 include("CarFullThrottleTransient_definition.jl")
 include("CarFullThrottle_definition.jl")
 include("Car_definition.jl")
+include("ConverterDynoTransient_definition.jl")
+include("ConverterDyno_definition.jl")
+include("Converter_definition.jl")
 include("CruiseClimbTransient_definition.jl")
 include("CruiseClimb_definition.jl")
 include("CruiseController_definition.jl")
 include("CruiseLoopStep_definition.jl")
 include("CruiseLoopTransient_definition.jl")
+include("DCMachineDynoTransient_definition.jl")
+include("DCMachineDyno_definition.jl")
+include("DCMachine_definition.jl")
 include("Driveline_definition.jl")
 include("EngineStepTransient_definition.jl")
 include("EngineStep_definition.jl")
